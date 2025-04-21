@@ -1,0 +1,10 @@
+.venv
+.project
+.idea
+.vscode
+__pycache__
+.DS_Store
+.vscode/
+.editorconfig
+/dist
+/pyamlconf.egg-info

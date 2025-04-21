@@ -1,0 +1,9 @@
+db:
+  url: mysql://{{.host}}:3306
+  host: 127.0.0.1
+  name: dbtest
+  pwd: 123456
+  pool:
+    size: 100
+    maxidle: 10
+  desc: "db.url = {{ db.url }}; db.name = {{ .name }}; db.pool = {{.pool}} "
