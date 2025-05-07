@@ -19,12 +19,25 @@ class PyamlConfig:
         with open(config_file, 'r') as f:
             self.__config = yaml.safe_load(f)
 
-    def update(self, config: 'PyamlConfig'):
+    @staticmethod
+    def __deep_merge(dict1: dict, dict2: dict, merge: bool):
+        result = dict1.copy()
+        for key, value in dict2.items():
+            if not merge and not result.__contains__(key):
+                continue
+            if key in result and isinstance(result[key], dict) and isinstance(value, dict):
+                result[key] = PyamlConfig.__deep_merge(result[key], value, merge)
+            else:
+                result[key] = value
+        return result
+
+    def update(self, config: 'PyamlConfig', merge: bool = False):
         '''
         update with another config
         :param config: PyamlConfig
+        :param merge: True: merge all key; False: update exists key
         '''
-        self.__config.update(config.__config)
+        self.__config = PyamlConfig.__deep_merge(self.__config, config.__config, merge)
 
     def get(self, key: str, default_value=None) -> (str | int | float | bool | list | dict):
         '''

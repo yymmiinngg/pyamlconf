@@ -1,8 +1,8 @@
 db:
   url: mysql://{{.host}}:3306
-  host: 127.0.0.1
+  host: 10.0.22.1
   name: dbtest
-  pwd: 123456
+  pwd: fo89q3yg9uaow34
   pool:
     size: 100
     maxidle: 10
