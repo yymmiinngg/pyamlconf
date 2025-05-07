@@ -1,6 +1,6 @@
 [project]
 name = "pyamlconf"
-version = "0.0.1"
+version = "0.0.2"
 description = "A simple YAML-based configuration loader for Python"
 authors = [
     { name = "Monster Yao", email = "yymmiinngg@163.com" }
