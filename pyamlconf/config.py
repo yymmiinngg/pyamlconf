@@ -9,14 +9,14 @@ class PyamlConfig:
     config_file: str
     __config: dict
 
-    def __init__(self, config_file: str):
+    def __init__(self, config_file: str, encoding: str = 'utf-8'):
         '''
         build a yaml file to pymalconfig object
         :param config_file: a yaml file
         '''
         self.__config = {}
         self.config_file = config_file
-        with open(config_file, 'r') as f:
+        with open(config_file, 'r', encoding=encoding) as f:
             self.__config = yaml.safe_load(f)
 
     @staticmethod
