@@ -1,19 +1,38 @@
 import re
 import yaml
 
+# ${var}
 mustache_p = re.compile(r"(\{\{ *[a-zA-Z0-9\.\-_]*? *\}\})")
 
 
 class PyamlConfig:
     config_file: str
-    __config: dict = {}
+    __config: dict
 
     def __init__(self, config_file: str):
+        '''
+        build a yaml file to pymalconfig object
+        :param config_file: a yaml file
+        '''
+        self.__config = {}
         self.config_file = config_file
         with open(config_file, 'r') as f:
             self.__config = yaml.safe_load(f)
 
+    def update(self, config: 'PyamlConfig'):
+        '''
+        update with another config
+        :param config: PyamlConfig
+        '''
+        self.__config.update(config.__config)
+
     def get(self, key: str, default_value=None) -> (str | int | float | bool | list | dict):
+        '''
+        get a value from config
+        :param key: get value by this key, like: db.name
+        :param default_value: if db.name have no value, then return default_value
+        :return: str | int | float | bool | list | dict
+        '''
         keys = key.split(".")
         i = 0
         c = self.__config

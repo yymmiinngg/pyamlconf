@@ -38,6 +38,8 @@ print(config.get('db.url'))
 print(config.get('db.desc'))
 ```
 
+run test
+
 ```commandline
 python tests/test.py
 ```
