@@ -1,4 +1,4 @@
 rm -rf dist/*
-pip install build
+pip install build twine
 python -m build
 twine upload dist/*
