@@ -1,4 +1,6 @@
 import re
+from typing import Union, Optional
+
 import yaml
 
 # ${var}
@@ -10,10 +12,10 @@ class PyamlConfig:
     __config: dict
 
     def __init__(self, config_file: str, encoding: str = 'utf-8'):
-        '''
+        """
         build a yaml file to pymalconfig object
         :param config_file: a yaml file
-        '''
+        """
         self.__config = {}
         self.config_file = config_file
         with open(config_file, 'r', encoding=encoding) as f:
@@ -32,20 +34,20 @@ class PyamlConfig:
         return result
 
     def update(self, config: 'PyamlConfig', merge: bool = False):
-        '''
+        """
         update with another config
         :param config: PyamlConfig
         :param merge: True: merge all key; False: update exists key
-        '''
+        """
         self.__config = PyamlConfig.__deep_merge(self.__config, config.__config, merge)
 
-    def get(self, key: str, default_value=None) -> (str | int | float | bool | list | dict):
-        '''
+    def get(self, key: str, default_value=None) -> (Union[str, int, float, bool, list, dict]):
+        """
         get a value from config
         :param key: get value by this key, like: db.name
         :param default_value: if db.name have no value, then return default_value
         :return: str | int | float | bool | list | dict
-        '''
+        """
         keys = key.split(".")
         i = 0
         c = self.__config
@@ -72,23 +74,51 @@ class PyamlConfig:
 
         return c
 
-    def get_str(self, key: str, default_value=None) -> str:
-        return str(self.get(key, default_value))
+    def get_str(self, key: str, default_value: str = None) -> Optional[str]:
+        """
+        get a str from config
+        """
+        val = self.get(key)
+        return default_value if val is None else str(val)
 
-    def get_int(self, key: str, default_value: int = None) -> int:
-        return int(self.get(key, default_value))
+    def get_int(self, key: str, default_value: int = None) -> Optional[int]:
+        """
+        get a int from config
+        """
+        val = self.get(key)
+        return default_value if val is None else int(val)
 
-    def get_float(self, key: str, default_value: float = None) -> float:
-        return float(self.get(key, default_value))
+    def get_float(self, key: str, default_value: float = None) -> Optional[float]:
+        """
+        get a float from config
+        """
+        val = self.get(key)
+        return default_value if val is None else float(val)
 
-    def get_bool(self, key: str, default_value: bool = None) -> bool:
-        return bool(self.get(key, default_value))
+    def get_bool(self, key: str, default_value: bool = None) -> Optional[bool]:
+        """
+        get a bool value from config
+        """
+        val = self.get(key)
+        return default_value if val is None else bool(val)
 
-    def get_list(self, key: str, default_value: bool = None) -> list:
-        return list(self.get(key, default_value))
+    def get_list(self, key: str, default_value: list = None) -> Optional[list]:
+        """
+        get a list from config
+        """
+        val = self.get(key)
+        return default_value if val is None else list(val)
 
-    def get_tuple(self, key: str, default_value: bool = None) -> tuple:
-        return tuple(self.get(key, default_value))
+    def get_tuple(self, key: str, default_value: tuple = None) -> Optional[tuple]:
+        """
+        get a tuple from config
+        """
+        val = self.get(key)
+        return default_value if val is None else tuple(val)
 
-    def get_set(self, key: str, default_value: bool = None) -> set:
-        return set(self.get(key, default_value))
+    def get_set(self, key: str, default_value: set = None) -> Optional[set]:
+        """
+        get a set from config
+        """
+        val = self.get(key)
+        return default_value if val is None else set(val)
